@@ -13,13 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Professor extends User implements Serializable {
+public class Professor extends User  {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
     private List<Disciplina> disciplinas;
+
 
 
 

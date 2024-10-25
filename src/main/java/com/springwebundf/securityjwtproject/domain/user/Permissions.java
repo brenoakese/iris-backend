@@ -7,12 +7,12 @@ import lombok.RequiredArgsConstructor;
 public enum Permissions {
 
     PROFESSOR_READ("professor:read"),
-    PROFESSOR_WRITE("professor:write"),
+    PROFESSOR_CREATE("professor:create"),
     PROFESSOR_UPDATE("professor:update"),
     PROFESSOR_DELETE("professor:delete"),
 
     COORDENADOR_READ("coordenador:read"),
-    COORDENADOR_WRITE("coordenador:write"),
+    COORDENADOR_CREATE("coordenador:create"),
     COORDENADOR_UPDATE("coordenador:update"),
     COORDENADOR_DELETE("coordenador:delete"),
 
@@ -20,4 +20,6 @@ public enum Permissions {
 
     @Getter
     private final String permission;
+
+
 }

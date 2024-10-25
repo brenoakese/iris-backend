@@ -3,8 +3,6 @@ package com.springwebundf.securityjwtproject.domain.user;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,10 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Aluno extends User implements Serializable {
+public class Aluno extends User  {
 
-        @Serial
-        private static final long serialVersionUID = 1L;
+
 
         @ManyToMany
         @JoinTable(
@@ -25,6 +22,7 @@ public class Aluno extends User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "disciplina_id")
         )
         private List<Disciplina> disciplinas;
+
 
 
 }

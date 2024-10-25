@@ -4,6 +4,8 @@ import com.springwebundf.securityjwtproject.domain.user.Professor;
 import com.springwebundf.securityjwtproject.repositories.AlunoRepository;
 import com.springwebundf.securityjwtproject.repositories.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(professor.getCpf(), professor.getPassword(), Collections.emptyList());
     }
+
 
 
 }

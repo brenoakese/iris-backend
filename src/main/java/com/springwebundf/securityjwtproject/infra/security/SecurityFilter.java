@@ -1,11 +1,9 @@
 package com.springwebundf.securityjwtproject.infra.security;
 
-import com.springwebundf.securityjwtproject.domain.user.Professor;
-import com.springwebundf.securityjwtproject.repositories.ProfessorRepository;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,8 +11,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
-import java.util.Collections;
+import com.auth0.jwt.JWT;
+import com.springwebundf.securityjwtproject.domain.user.Professor;
+import com.springwebundf.securityjwtproject.repositories.ProfessorRepository;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -32,7 +36,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if(login != null) {
             Professor professor = professorRepository.findByCpf(login).orElseThrow(() -> new RuntimeException("User not found."));
-            var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+            var roles = JWT.decode(token).getClaim("role").asArray(String.class);
+            var authorities = Arrays.stream(roles)
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
             var authentication = new UsernamePasswordAuthenticationToken(professor, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

@@ -29,6 +29,7 @@ public class TokenService {
 
             String token = JWT.create()
                     .withIssuer("login-auth-api")
+                    .withArrayClaim("role", new String[] {"ROLE_TESTE"})
                     .withSubject(user.getCpf())
                     .withExpiresAt(Date.from(expirationDate))
                     .sign(algorithm);

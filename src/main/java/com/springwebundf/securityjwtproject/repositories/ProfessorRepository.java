@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface ProfessorRepository extends JpaRepository<Professor, String> {
     Optional<Professor> findByCpf(String cpf);
+
+
 }

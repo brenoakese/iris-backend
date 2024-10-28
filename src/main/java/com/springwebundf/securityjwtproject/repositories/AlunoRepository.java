@@ -9,4 +9,6 @@ public interface AlunoRepository extends JpaRepository<Aluno, String> {
 
     Optional<Aluno> findByCpf(String cpf);
 
+    Optional<Aluno> findById(Long id);
+
 }

@@ -44,7 +44,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .findFirst()
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
         if (user instanceof Professor professor) {
             return new org.springframework.security.core.userdetails.User(
@@ -65,7 +65,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     Collections.emptyList()
             );
         } else {
-            throw new UsernameNotFoundException("User type not recognized");
+            throw new UsernameNotFoundException("Usuário não encontrado");
         }
     }
 }

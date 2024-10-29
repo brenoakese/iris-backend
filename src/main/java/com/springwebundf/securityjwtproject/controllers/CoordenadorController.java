@@ -1,8 +1,10 @@
 package com.springwebundf.securityjwtproject.controllers;
 
+import com.springwebundf.securityjwtproject.domain.user.Aluno;
 import com.springwebundf.securityjwtproject.domain.user.Disciplina;
 import com.springwebundf.securityjwtproject.domain.user.Professor;
 import com.springwebundf.securityjwtproject.domain.user.Roles;
+import com.springwebundf.securityjwtproject.dto.RegisterAlunoDTO;
 import com.springwebundf.securityjwtproject.dto.RegisterRequestDTO;
 import com.springwebundf.securityjwtproject.dto.RegisterRequestDisciplinaDTO;
 import com.springwebundf.securityjwtproject.repositories.AlunoRepository;
@@ -42,7 +44,25 @@ public class CoordenadorController {
             return ResponseEntity.ok("Disciplina registrada com sucesso");
         }
 
+    }
 
+    @PostMapping("/register/aluno")
+    public ResponseEntity registerAluno(@RequestBody RegisterAlunoDTO body){
+        Optional<Aluno> aluno = alunoRepository.findByCpf(body.cpf());
+
+        if(aluno.isPresent()){
+            return ResponseEntity.badRequest().build();
+        }
+        else {
+            Aluno newaluno = new Aluno();
+            newaluno.setName(body.name());
+            newaluno.setCpf(body.cpf());
+            newaluno.setPassword(passwordEncoder.encode(body.password()));
+            newaluno.setRole(Roles.ALUNO);
+            alunoRepository.save(newaluno);
+
+            return ResponseEntity.ok().build();
+        }
     }
 
     @GetMapping("/listarDisciplinas")

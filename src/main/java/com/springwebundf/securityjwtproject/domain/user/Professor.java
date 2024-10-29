@@ -1,5 +1,6 @@
 package com.springwebundf.securityjwtproject.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class Professor extends User  {
 
 
     @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Disciplina> disciplinas;
 
 

@@ -43,8 +43,13 @@ public class SecurityConfig {
 
                         .requestMatchers(POST, "auth/login").permitAll()
                         .requestMatchers(POST,"auth/register/coordenador").permitAll()
-                        .requestMatchers(POST,"api/coordenador/register/professor").permitAll()
                         .requestMatchers(POST, "api/coordenador/**").permitAll()
+                        .requestMatchers(POST, "api/professor/**").permitAll()
+                        .requestMatchers(POST, "api/aluno/**").permitAll()
+                        .requestMatchers(GET, "api/aluno/**").permitAll()
+                        .requestMatchers(GET, "api/coordenador/**").permitAll()
+                        .requestMatchers(GET, "api/professor/**").permitAll()
+
 
                         /*
                             .requestMatchers("/api/coordenador/**").hasRole(COORDENADOR.name())

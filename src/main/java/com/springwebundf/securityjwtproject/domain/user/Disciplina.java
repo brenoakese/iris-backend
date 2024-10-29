@@ -1,5 +1,6 @@
 package com.springwebundf.securityjwtproject.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Disciplina implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "professor_id")
+    @JsonBackReference
     private Professor professor;
 
     @ManyToMany(mappedBy = "disciplinas")

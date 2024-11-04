@@ -31,6 +31,7 @@ public class TokenService {
                     .withIssuer("login-auth-api")
                     .withArrayClaim("role", new String[] {"ROLE_TESTE"})
                     .withSubject(user.getCpf())
+                    .withClaim("nome", user.getName())
                     .withExpiresAt(Date.from(expirationDate))
                     .sign(algorithm);
 

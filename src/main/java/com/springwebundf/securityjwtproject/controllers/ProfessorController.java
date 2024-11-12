@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,15 +46,15 @@ public class ProfessorController {
         Optional<Aluno> aluno = alunoRepository.findById(body.alunoId());
 
         if (professor.isEmpty() || disciplina.isEmpty() || aluno.isEmpty()) {
-            return ResponseEntity.badRequest().body("Professor, Disciplina ou Aluno não encontrado");
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Professor, Disciplina ou Aluno não encontrado"));
         }
 
         if(!professor.get().getDisciplinas().contains(disciplina.get())){
-            return ResponseEntity.badRequest().body("Professor não é responsável por essa disciplina");
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Professor não é responsável por essa disciplina"));
         }
 
         if (!aluno.get().getDisciplinas().contains(disciplina.get())) {
-            return ResponseEntity.badRequest().body("Aluno não está matriculado nessa disciplina");
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Aluno não está matriculado nessa disciplina"));
         }
 
         Atividades atividade = new Atividades();
@@ -64,7 +65,7 @@ public class ProfessorController {
         atividade.setNota(body.nota());
 
         atividadesRepository.save(atividade);
-        return ResponseEntity.ok("Atividade cadastrada com sucesso");
+        return ResponseEntity.ok(Collections.singletonMap("mensagem", "Atividade cadastrada com sucesso"));
     }
 }
 

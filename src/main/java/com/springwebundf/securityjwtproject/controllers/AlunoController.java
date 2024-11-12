@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @RestController
@@ -23,7 +24,7 @@ public class AlunoController {
         Optional<Aluno> aluno = alunoRepository.findById(id);
 
         if(aluno.isEmpty()){
-            return ResponseEntity.badRequest().body("Aluno não encontrado");
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Aluno não encontrado"));
         }
         else {
             return ResponseEntity.ok(aluno.get().getDisciplinas());

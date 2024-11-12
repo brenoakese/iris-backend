@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @RestController
@@ -33,7 +34,7 @@ public class CoordenadorController {
         Optional<Professor> professor = professorRepository.findByCpf(body.professorCpf());
 
         if(professor.isEmpty()){
-            return ResponseEntity.badRequest().body("Professor não encontrado");
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Professor não encontrado"));
         }
         else {
             Disciplina disciplina = new Disciplina();
@@ -83,7 +84,7 @@ public class CoordenadorController {
         Optional<Professor> professor = professorRepository.findByCpf(body.cpf());
 
         if(professor.isPresent()){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Usuário já cadastrado"));
         }
         else {
             Professor newprofessor = new Professor();

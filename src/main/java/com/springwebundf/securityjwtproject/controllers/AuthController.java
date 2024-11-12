@@ -1,5 +1,15 @@
 package com.springwebundf.securityjwtproject.controllers;
 
+import java.util.Collections;
+import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.springwebundf.securityjwtproject.domain.user.Aluno;
 import com.springwebundf.securityjwtproject.domain.user.Coordenador;
 import com.springwebundf.securityjwtproject.domain.user.Professor;
@@ -11,14 +21,8 @@ import com.springwebundf.securityjwtproject.infra.security.TokenService;
 import com.springwebundf.securityjwtproject.repositories.AlunoRepository;
 import com.springwebundf.securityjwtproject.repositories.CoordenadorRepository;
 import com.springwebundf.securityjwtproject.repositories.ProfessorRepository;
-import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -74,7 +78,7 @@ public class AuthController {
             }
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Usuário ou senha inválidos"));
     }
 
     @PostMapping("/register/professor")
@@ -82,7 +86,7 @@ public class AuthController {
         String user = typeUser(body.cpf());
 
         if(user != null){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Usuário já cadastrado"));
         }
 
         Professor newprofessor = new Professor();
@@ -101,7 +105,7 @@ public class AuthController {
         String user = typeUser(body.cpf());
 
         if(user != null){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Usuário já cadastrado"));
         }
 
         Coordenador newCoordenador = new Coordenador();

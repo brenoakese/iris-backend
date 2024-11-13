@@ -35,7 +35,7 @@ public class TokenService {
                     .withExpiresAt(Date.from(expirationDate))
                     .sign(algorithm);
 
-            return new TokenData(token, expirationDate);
+            return new TokenData(token);
 
         }catch (JWTCreationException e) {
             throw new RuntimeException("Error generating token.");

@@ -4,5 +4,5 @@ import com.springwebundf.securityjwtproject.infra.security.TokenData;
 
 import java.time.Instant;
 
-public record ResponseDTO(TokenData token, String name, String typeUser) {
+public record ResponseDTO(TokenData token) {
 }

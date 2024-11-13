@@ -51,7 +51,7 @@ public class AuthController {
             ) {
                 TokenData token = tokenService.generateToken(coordenador.get());
                 return ResponseEntity.ok(
-                    new ResponseDTO(token, coordenador.get().getName(), "coordenador")
+                    new ResponseDTO(token)
                 );
             }
         }
@@ -70,9 +70,7 @@ public class AuthController {
                 TokenData token = tokenService.generateToken(professor.get());
                 return ResponseEntity.ok(
                     new ResponseDTO(
-                        token,
-                        professor.get().getName(),
-                        "professor"
+                        token
                     )
                 );
             }

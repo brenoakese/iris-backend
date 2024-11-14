@@ -131,4 +131,13 @@ public class AuthController {
 
         return null;
     }
+
+    @GetController(/validar-token)
+    public ResponseEntity<> validarToken(@RequestBody String token) {
+        if(tokenService.validarToken(token) != null) {
+            return ResponseEntity.ok().body(Collections.singletonMap("mensagem", "Token válido!"));
+        } else {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Token inválido"));
+        }
+    }
 }

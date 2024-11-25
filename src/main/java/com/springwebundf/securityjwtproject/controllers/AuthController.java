@@ -134,11 +134,11 @@ public class AuthController {
     }
 
     @GetMapping("/validar-token")
-    public ResponseEntity validarToken(@RequestBody String token) {
+    public ResponseEntity<?> validarToken(@RequestHeader("Authorization") String token) {
         if(tokenService.validateToken(token) != null) {
             return ResponseEntity.ok().body(Collections.singletonMap("mensagem", "Token válido!"));
         } else {
-            return ResponseEntity.badRequest().body(Collections.singletonMap("mensagem", "Token inválido"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("mensagem", "Token inválido"));
         }
     }
 }

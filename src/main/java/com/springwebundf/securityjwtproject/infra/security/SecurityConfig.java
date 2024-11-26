@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(GET, "api/aluno/**").permitAll()
                         .requestMatchers(GET, "api/coordenador/**").permitAll()
                         .requestMatchers(GET, "api/professor/**").permitAll()
-                        .requestMatchers(GET, "/auth/validar-token")
+                        .requestMatchers(GET, "/auth/validar-token").permitAll()
 
 
                         /*

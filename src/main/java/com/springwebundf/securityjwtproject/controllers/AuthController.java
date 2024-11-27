@@ -3,6 +3,8 @@ package com.springwebundf.securityjwtproject.controllers;
 import java.util.Collections;
 import java.util.Optional;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +34,7 @@ public class AuthController {
     private final ProfessorRepository professorRepository;
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
+    private final ObjectMapper objectMapper;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {
@@ -130,12 +133,19 @@ public class AuthController {
         return null;
     }
 
-    @GetMapping("/validar-token")
-    public ResponseEntity<?> validarToken(@RequestHeader("Authorization") String token) {
-        if(tokenService.validateToken(token) != null) {
-            return ResponseEntity.ok().body(Collections.singletonMap("mensagem", "Token válido!"));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("mensagem", "Token inválido"));
+    @PostMapping("/validate/token")
+    public ResponseEntity<?> validateToken(@RequestBody String body) {
+        try {
+            JsonNode json = objectMapper.readTree(body);
+            String token = json.get("token").asText();
+            if(tokenService.validateToken(token) != null) {
+                return ResponseEntity.ok().body(Collections.singletonMap("mensagem", "Token válido!"));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("mensagem", "Token inválido"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("mensagem", "JSON inválido"));
         }
+
     }
 }

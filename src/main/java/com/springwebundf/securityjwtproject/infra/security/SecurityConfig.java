@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(GET, "api/aluno/**").permitAll()
                         .requestMatchers(GET, "api/coordenador/**").permitAll()
                         .requestMatchers(GET, "api/professor/**").permitAll()
-                        .requestMatchers(GET, "/auth/validar-token").permitAll()
+                        .requestMatchers(POST, "auth/validar-token").permitAll()
 
 
                         /*
@@ -65,7 +65,7 @@ public class SecurityConfig {
                             .requestMatchers(PUT,"/api/professor/**").hasAuthority(PROFESSOR_UPDATE.name())
                             .requestMatchers(DELETE,"/api/professor/**").hasAuthority(PROFESSOR_DELETE.name())
 
-*/
+                        */
                     .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

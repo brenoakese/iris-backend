@@ -1,9 +1,10 @@
 package com.springwebundf.securityjwtproject.repositories;
 
-import com.springwebundf.securityjwtproject.domain.user.Aluno;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import com.springwebundf.securityjwtproject.domain.user.Aluno;
 
 public interface AlunoRepository extends JpaRepository<Aluno, String> {
 

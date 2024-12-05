@@ -21,11 +21,13 @@ import com.springwebundf.securityjwtproject.repositories.AlunoRepository;
 import com.springwebundf.securityjwtproject.repositories.DisciplinaRepository;
 import com.springwebundf.securityjwtproject.repositories.ProfessorRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/coordenador")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class CoordenadorController {
 
     private final AlunoRepository alunoRepository;
@@ -80,7 +82,9 @@ public class CoordenadorController {
     }
 
     @GetMapping("/listarProfessores")
-    public ResponseEntity listarProfessores(){ return ResponseEntity.ok(professorRepository.findAll()); }
+    public ResponseEntity listarProfessores(){
+    	return ResponseEntity.ok(professorRepository.findAll());
+    }
 
 
     @PostMapping("/register/professor")

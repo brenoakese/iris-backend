@@ -1,9 +1,10 @@
 package com.springwebundf.securityjwtproject.repositories;
 
-import com.springwebundf.securityjwtproject.domain.user.Disciplina;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.springwebundf.securityjwtproject.domain.user.Disciplina;
 
 public interface DisciplinaRepository extends JpaRepository<Disciplina, Long> {
 

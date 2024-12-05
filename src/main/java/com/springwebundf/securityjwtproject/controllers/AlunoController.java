@@ -1,20 +1,24 @@
 package com.springwebundf.securityjwtproject.controllers;
 
-import com.springwebundf.securityjwtproject.domain.user.Aluno;
-import com.springwebundf.securityjwtproject.repositories.AlunoRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.Collections;
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.Optional;
+import com.springwebundf.securityjwtproject.domain.user.Aluno;
+import com.springwebundf.securityjwtproject.repositories.AlunoRepository;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/aluno")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class AlunoController {
 
     private final AlunoRepository alunoRepository;

@@ -3,13 +3,16 @@ package com.springwebundf.securityjwtproject.controllers;
 import java.util.Collections;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springwebundf.securityjwtproject.domain.user.Aluno;
 import com.springwebundf.securityjwtproject.domain.user.Coordenador;
 import com.springwebundf.securityjwtproject.domain.user.Professor;
@@ -22,6 +25,7 @@ import com.springwebundf.securityjwtproject.repositories.AlunoRepository;
 import com.springwebundf.securityjwtproject.repositories.CoordenadorRepository;
 import com.springwebundf.securityjwtproject.repositories.ProfessorRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -39,7 +43,9 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {
         String user = typeUser(body.cpf());
-        if(user == null) return ResponseEntity.badRequest().build();
+        if(user == null) {
+			return ResponseEntity.badRequest().build();
+		}
 
         if (user.equals("coordenador")) {
             Optional<Coordenador> coordenador = coordenadorRepository.findByCpf(body.cpf());
@@ -83,6 +89,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/professor")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body){
         String user = typeUser(body.cpf());
 
@@ -95,6 +102,7 @@ public class AuthController {
         newprofessor.setName(body.name());
         newprofessor.setCpf(body.cpf());
         newprofessor.setPassword(passwordEncoder.encode(body.password()));
+        newprofessor.setRole("PROFESSOR");
 
         professorRepository.save(newprofessor);
 
@@ -114,6 +122,7 @@ public class AuthController {
         newCoordenador.setName(body.name());
         newCoordenador.setCpf(body.cpf());
         newCoordenador.setPassword(passwordEncoder.encode(body.password()));
+        newCoordenador.setRole("COORDENADOR");
 
         coordenadorRepository.save(newCoordenador);
 
@@ -123,14 +132,20 @@ public class AuthController {
     private String typeUser(String cpf) {
         Optional<Aluno> aluno = alunoRepository.findByCpf(cpf);
 
-        if(aluno.isPresent()) return "aluno";
+        if(aluno.isPresent()) {
+			return "aluno";
+		}
 
         Optional<Professor> professor = professorRepository.findByCpf(cpf);
 
-        if(professor.isPresent()) return "professor";
+        if(professor.isPresent()) {
+			return "professor";
+		}
 
         Optional<Coordenador> coordenador = coordenadorRepository.findByCpf(cpf);
-        if(coordenador.isPresent()) return "coordenador";
+        if(coordenador.isPresent()) {
+			return "coordenador";
+		}
 
         return null;
     }

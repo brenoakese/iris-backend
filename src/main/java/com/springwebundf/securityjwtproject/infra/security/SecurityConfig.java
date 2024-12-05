@@ -1,5 +1,8 @@
 package com.springwebundf.securityjwtproject.infra.security;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.*;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     SecurityFilter securityFilter;
@@ -39,16 +37,13 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll()
 
                         .requestMatchers(POST, "auth/login").permitAll()
-                        .requestMatchers(POST,"auth/register/coordenador").permitAll()
-                        .requestMatchers(POST, "api/coordenador/**").permitAll()
-                        .requestMatchers(POST, "api/professor/**").permitAll()
-                        .requestMatchers(POST, "api/aluno/**").permitAll()
-                        .requestMatchers(GET, "api/aluno/**").permitAll()
-                        .requestMatchers(GET, "api/coordenador/**").permitAll()
-                        .requestMatchers(GET, "api/professor/**").permitAll()
                         .requestMatchers(POST, "auth/validar-token").permitAll()
-
-
+                        .requestMatchers(POST,"auth/register/coordenador").permitAll()
+                        
+                        .requestMatchers("api/coordenador/**").hasRole("COORDENADOR")
+                        .requestMatchers("api/professor/**").hasAnyRole("PROFESSOR", "COORDENADOR")
+                        .requestMatchers(POST, "api/aluno/**").hasAnyRole("PROFESSOR", "COORDENADOR")
+                        
                         /*
                             .requestMatchers("/api/coordenador/**").hasRole(COORDENADOR.name())
                             .requestMatchers(GET,"/api/coordenador/**").hasAuthority(COORDENADOR_READ.name())

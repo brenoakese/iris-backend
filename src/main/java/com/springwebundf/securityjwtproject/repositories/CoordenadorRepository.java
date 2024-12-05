@@ -1,9 +1,10 @@
 package com.springwebundf.securityjwtproject.repositories;
 
-import com.springwebundf.securityjwtproject.domain.user.Coordenador;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import com.springwebundf.securityjwtproject.domain.user.Coordenador;
 
 public interface CoordenadorRepository extends JpaRepository<Coordenador, String> {
     Optional<Coordenador> findByCpf(String cpf);

@@ -1,19 +1,19 @@
 package com.springwebundf.securityjwtproject.infra.security;
 
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.springwebundf.securityjwtproject.domain.user.Professor;
-import com.springwebundf.securityjwtproject.domain.user.User;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.springwebundf.securityjwtproject.domain.user.User;
 
 @Service
 public class TokenService {
@@ -25,7 +25,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             Instant expirationDate = generateExpirationDate();
-            
+
             String token = JWT.create()
                     .withIssuer("login-auth-api")
                     .withArrayClaim("role", new String[] {"ROLE_" + user.getRole().toUpperCase()})

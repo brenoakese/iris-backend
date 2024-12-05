@@ -14,10 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static com.springwebundf.securityjwtproject.domain.user.Permissions.*;
-import static com.springwebundf.securityjwtproject.domain.user.Roles.COORDENADOR;
-import static com.springwebundf.securityjwtproject.domain.user.Roles.PROFESSOR;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration

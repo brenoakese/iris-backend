@@ -50,6 +50,7 @@ public class AuthController {
                     coordenador.get().getPassword()
                 )
             ) {
+            	coordenador.get().setRole("COORDENADOR");
                 TokenData token = tokenService.generateToken(coordenador.get());
                 return ResponseEntity.ok(
                     new ResponseDTO(token)
@@ -68,6 +69,7 @@ public class AuthController {
                     professor.get().getPassword()
                 )
             ) {
+            	professor.get().setRole("PROFESSOR");
                 TokenData token = tokenService.generateToken(professor.get());
                 return ResponseEntity.ok(
                     new ResponseDTO(

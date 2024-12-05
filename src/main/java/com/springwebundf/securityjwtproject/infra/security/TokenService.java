@@ -25,11 +25,10 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             Instant expirationDate = generateExpirationDate();
-
-
+            
             String token = JWT.create()
                     .withIssuer("login-auth-api")
-                    .withArrayClaim("role", new String[] {"ROLE_TESTE"})
+                    .withArrayClaim("role", new String[] {"ROLE_" + user.getRole().toUpperCase()})
                     .withSubject(user.getCpf())
                     .withClaim("nome", user.getName())
                     .withExpiresAt(Date.from(expirationDate))

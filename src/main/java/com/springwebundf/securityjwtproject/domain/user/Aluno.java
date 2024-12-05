@@ -1,9 +1,16 @@
 package com.springwebundf.securityjwtproject.domain.user;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "alunos")
@@ -12,9 +19,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Aluno extends User  {
-
-
-
         @ManyToMany
         @JoinTable(
             name = "aluno_disciplinas",

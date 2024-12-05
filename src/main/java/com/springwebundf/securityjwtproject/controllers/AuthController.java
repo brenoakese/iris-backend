@@ -135,10 +135,11 @@ public class AuthController {
         return null;
     }
 
-    @PostMapping("/validate/token")
+    @PostMapping("/validar-token")
     public ResponseEntity<?> validateToken(@RequestBody String body) {
         try {
             JsonNode json = objectMapper.readTree(body);
+            System.out.println(body);
             String token = json.get("token").asText();
             if(tokenService.validateToken(token) != null) {
                 return ResponseEntity.ok().body(Collections.singletonMap("mensagem", "Token válido!"));
@@ -146,6 +147,7 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("mensagem", "Token inválido"));
             }
         } catch (Exception e) {
+        	e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("mensagem", "JSON inválido"));
         }
 

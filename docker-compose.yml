@@ -12,10 +12,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - iris_network
 
-  app:
+  api:
     build: .
-    container_name: spring_app
+    container_name: iris_api
     ports:
       - "8080:8080"
     depends_on:
@@ -26,6 +28,24 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456789
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       API_SECURITY_TOKEN_SECRET: my-secret-key-from-video
+    networks:
+      - iris_network
+
+  app:
+    build:
+      context: ../iris
+      dockerfile: Dockerfile
+    container_name: iris_app
+    ports:
+      - "4173:4173"
+    environment :
+      - BACKEND_URL=http://iris_api:8080/
+    networks:
+      - iris_network
 
 volumes:
   postgres_data:
+
+networks:
+  iris_network:
+    driver: bridge

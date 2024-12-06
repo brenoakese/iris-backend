@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @OpenAPIDefinition(
-    info = @Info(title = "API CADE REST", version = "v1")
+    info = @Info(title = "API IRIS REST", version = "v1")
 )
 @SecurityScheme(
     name = "bearerAuth",
